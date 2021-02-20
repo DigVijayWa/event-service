@@ -1,5 +1,6 @@
 package com.event.app.security;
 
+import com.event.app.exception.AuthenticationException;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
@@ -32,7 +33,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         Authentication auth = jwtTokenProvider.getAuthentication(token);
         SecurityContextHolder.getContext().setAuthentication(auth);
       }
-    } catch (CustomException ex) {
+    } catch (AuthenticationException ex) {
       //this is very important, since it guarantees the user is not authenticated at all
       SecurityContextHolder.clearContext();
       httpServletResponse.sendError(ex.getHttpStatus().value(), ex.getMessage());

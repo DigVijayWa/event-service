@@ -6,12 +6,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-class EventObjectNotFound {
+class EventObjectNotFoundAdvice {
 
   @ResponseBody
   @ExceptionHandler(EventObjectNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
   String employeeNotFoundHandler(EventObjectNotFoundException ex) {
-    return ex.getMessage();
+    return ex.toString();
   }
+
+
+  @ResponseBody
+  @ExceptionHandler(AuthenticationException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  String unAuthorized(AuthenticationException ex) { return ex.toString(); };
 }

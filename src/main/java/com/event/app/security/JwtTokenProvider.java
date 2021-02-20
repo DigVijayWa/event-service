@@ -1,5 +1,7 @@
 package com.event.app.security;
 
+import com.event.app.bean.Role;
+import com.event.app.exception.AuthenticationException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.List;
@@ -38,7 +40,7 @@ public class JwtTokenProvider {
   private long validityInMilliseconds = 3600000; // 1h
 
   @Autowired
-  private MyUserDetails myUserDetails;
+  private UserDetailService myUserDetails;
 
   @PostConstruct
   protected void init() {
@@ -83,7 +85,7 @@ public class JwtTokenProvider {
       Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
       return true;
     } catch (JwtException | IllegalArgumentException e) {
-      throw new CustomException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new AuthenticationException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
