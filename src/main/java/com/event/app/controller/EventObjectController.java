@@ -20,23 +20,19 @@ public class EventObjectController {
   @Autowired
   EventObjectRepository repository;
 
-  @RequestMapping(value="/eventObjects")
+  @RequestMapping(value = "/eventObjects")
   @ResponseBody
   List<EventObject> all() {
     return repository.findAll();
   }
-  // end::get-aggregate-root[]
 
-  @PostMapping(value="/eventObjects")
+  @PostMapping(value = "/eventObjects")
   @ResponseBody
   EventObject newEventObject(@RequestBody EventObject newEventObject) {
     return repository.save(newEventObject);
   }
 
-  // Single item
-
-  // tag::get-single-item[]
-  @RequestMapping(value="/eventObjects/{id}")
+  @RequestMapping(value = "/eventObjects/{id}")
   @ResponseBody
   EventObject one(@PathVariable Long id) {
 
@@ -46,7 +42,7 @@ public class EventObjectController {
     return eventObject;
   }
 
-  @PutMapping(value="/eventObjects/{id}")
+  @PutMapping(value = "/eventObjects/{id}")
   @ResponseBody
   EventObject replaceEventObject(@RequestBody EventObject newEventObject, @PathVariable Long id) {
 
@@ -65,7 +61,7 @@ public class EventObjectController {
         });
   }
 
-  @DeleteMapping(value="/eventObjects/{id}")
+  @DeleteMapping(value = "/eventObjects/{id}")
   @ResponseBody
   void deleteEventObject(@PathVariable Long id) {
     repository.deleteById(id);
