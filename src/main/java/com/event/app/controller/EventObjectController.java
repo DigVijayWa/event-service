@@ -66,5 +66,6 @@ public class EventObjectController {
   void deleteEventObject(@PathVariable Long id) {
     repository.deleteById(id);
   }
+
 }
 
