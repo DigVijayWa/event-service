@@ -40,7 +40,7 @@ public class EventObjectController {
   @ResponseBody
   EventObject one(@PathVariable Long id) {
 
-    EventObject eventObject = repository.findById(id) //
+    EventObject eventObject = repository.findById(id)
         .orElseThrow(() -> new EventObjectNotFoundException(id));
 
     return eventObject;
