@@ -2,6 +2,7 @@ package com.event.app.config;
 
 import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -15,13 +16,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @PropertySource("classpath:application.properties")
 public class DataSourceConfig implements WebMvcConfigurer {
 
-  @Autowired
-  Environment environment;
+  @Value("${spring.datasource.url}")
+  private String url;
 
-  private final String URL = "url";
-  private final String USER = "username";
-  private final String DRIVER = "driver";
-  private final String PASSWORD = "password";
+  @Value("${spring.datasource.driverClassName}")
+  private String driverClassName;
+
+  @Value("${spring.datasource.username}")
+  private String username;
+
+  @Value("${spring.datasource.password}")
+  private String password;
 
   private final long MAX_AGE_SECS = 3600;
 
@@ -29,10 +34,10 @@ public class DataSourceConfig implements WebMvcConfigurer {
   DataSource dataSource() {
     DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource();
 
-    driverManagerDataSource.setUrl("jdbc:postgresql://127.0.0.1:5432/");
-    driverManagerDataSource.setUsername("postgres");
-    driverManagerDataSource.setPassword("password");
-    driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
+    driverManagerDataSource.setUrl(url);
+    driverManagerDataSource.setUsername(username);
+    driverManagerDataSource.setPassword(password);
+    driverManagerDataSource.setDriverClassName(driverClassName);
 
     return driverManagerDataSource;
   }
