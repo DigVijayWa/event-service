@@ -15,6 +15,15 @@ public class EventObjectNotFoundException extends RuntimeException {
   }
 
   @Override
+  public String getMessage() {
+    return message;
+  }
+
+  public HttpStatus getHttpStatus() {
+    return httpStatus;
+  }
+
+  @Override
   public String toString() {
     return "{" +
         "\"message\":\"" + message + "\"," +

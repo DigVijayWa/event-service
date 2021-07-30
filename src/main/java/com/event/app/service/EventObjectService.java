@@ -19,7 +19,8 @@ public class EventObjectService {
         .user(user).build();
   }
 
-  public static EventObject mapEventObjectExisting(EventObjectPayload eventObjectPayload, EventObject eventObject, User user) {
+  public static EventObject mapEventObjectExisting(EventObjectPayload eventObjectPayload,
+      EventObject eventObject, User user) {
     eventObject.setDesign(eventObjectPayload.getDesign());
     eventObject.setEventDate(eventObjectPayload.getEventDate());
     eventObject.setEventDescription(eventObjectPayload.getEventDescription());

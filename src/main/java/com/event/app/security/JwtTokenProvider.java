@@ -50,7 +50,8 @@ public class JwtTokenProvider {
   public String createToken(String username, List<Role> roles) {
 
     Claims claims = Jwts.claims().setSubject(username);
-    claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority())).filter(Objects::nonNull).collect(Collectors.toList()));
+    claims.put("auth", roles.stream().map(s -> new SimpleGrantedAuthority(s.getAuthority()))
+        .filter(Objects::nonNull).collect(Collectors.toList()));
 
     Date now = new Date();
     Date validity = new Date(now.getTime() + validityInMilliseconds);
@@ -85,7 +86,8 @@ public class JwtTokenProvider {
       Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
       return true;
     } catch (JwtException | IllegalArgumentException e) {
-      throw new AuthenticationException("Expired or invalid JWT token", HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new AuthenticationException("Expired or invalid JWT token",
+          HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 

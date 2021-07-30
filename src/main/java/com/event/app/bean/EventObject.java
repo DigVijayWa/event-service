@@ -1,5 +1,6 @@
 package com.event.app.bean;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.util.Date;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -26,6 +27,7 @@ public class EventObject {
 
   @ManyToOne
   @JoinColumn(name = "user_id", nullable = false)
+  @JsonBackReference
   private User user;
 
   public EventObject() {}

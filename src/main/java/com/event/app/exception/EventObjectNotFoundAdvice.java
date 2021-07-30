@@ -1,5 +1,8 @@
 package com.event.app.exception;
+
+import com.event.app.payload.ErrorPayload;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,13 +14,10 @@ class EventObjectNotFoundAdvice {
   @ResponseBody
   @ExceptionHandler(EventObjectNotFoundException.class)
   @ResponseStatus(HttpStatus.NOT_FOUND)
-  String employeeNotFoundHandler(EventObjectNotFoundException ex) {
-    return ex.toString();
+  ResponseEntity<ErrorPayload> employeeNotFoundHandler(
+      EventObjectNotFoundException ex) {
+    return new ResponseEntity(
+        ErrorPayload.builder().message(ex.getMessage()).httpStatus(ex.getHttpStatus().toString()),
+        HttpStatus.NOT_FOUND);
   }
-
-
-  @ResponseBody
-  @ExceptionHandler(AuthenticationException.class)
-  @ResponseStatus(HttpStatus.UNAUTHORIZED)
-  String unAuthorized(AuthenticationException ex) { return ex.toString(); };
 }

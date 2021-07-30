@@ -1,5 +1,6 @@
 package com.event.app.bean;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="user_sys")
+@Table(name = "user_sys")
 public class User {
 
   @Id
@@ -30,7 +31,8 @@ public class User {
   @ElementCollection(fetch = FetchType.EAGER)
   List<Role> roles;
 
-  @OneToMany(mappedBy="user")
+  @OneToMany(mappedBy = "user")
+  @JsonManagedReference
   private Set<EventObject> eventObjects;
 
   public User() {
