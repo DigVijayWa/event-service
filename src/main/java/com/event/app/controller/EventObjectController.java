@@ -38,7 +38,7 @@ public class EventObjectController {
 
   @RequestMapping(value = "/eventObjects")
   @ResponseBody
-  List<EventObject> all(@RequestHeader(name = "Authorization") String token) {
+  public List<EventObject> all(@RequestHeader(name = "Authorization") String token) {
 
     logger.debug(String.format("accessToken %s", token));
 
@@ -49,7 +49,7 @@ public class EventObjectController {
 
   @PostMapping(value = "/eventObjects")
   @ResponseBody
-  EventObject newEventObject(@RequestBody EventObjectPayload newEventObject,
+  protected EventObject newEventObject(@RequestBody EventObjectPayload newEventObject,
       @RequestHeader(name = "Authorization") String token) {
 
     logger.debug(String.format("accessToken %s", token));
