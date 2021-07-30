@@ -38,8 +38,13 @@ public class EventObjectController {
 
   @RequestMapping(value = "/eventObjects")
   @ResponseBody
-  List<EventObject> all() {
-    return repository.findAll();
+  List<EventObject> all(@RequestHeader(name = "Authorization") String token) {
+
+    logger.debug(String.format("accessToken %s", token));
+
+    return userService.getUserByToken(token)
+        .map(user -> repository.findByUser(user))
+        .orElseThrow(() -> new UserNotFoundException(token));
   }
 
   @PostMapping(value = "/eventObjects")
