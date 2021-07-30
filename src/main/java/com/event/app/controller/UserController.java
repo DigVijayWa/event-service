@@ -27,10 +27,12 @@ public class UserController {
 
   @PostMapping("/signin")
   @ResponseBody
-  public String login(
+  public ResponseDTO login(
       @RequestBody UserPayload userPayload
   ) {
-    return userService.signin(userPayload.getUsername(), userPayload.getPassword());
+    return ResponseDTO.builder()
+        .accessToken(userService.signin(userPayload.getUsername(), userPayload.getPassword()))
+        .build();
   }
 
   @PostMapping("/signup")
