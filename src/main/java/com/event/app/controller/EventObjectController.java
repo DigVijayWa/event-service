@@ -9,8 +9,6 @@ import com.event.app.repository.EventObjectRepository;
 import com.event.app.service.EventObjectService;
 import com.event.app.service.UserService;
 import java.util.List;
-import java.util.Optional;
-import javax.swing.text.html.Option;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class EventObjectController {
 
   @RequestMapping(value = "/eventObjects")
   @ResponseBody
-  public List<EventObject> all(@RequestHeader(name = "Authorization") String token) {
+  List<EventObject> all(@RequestHeader(name = "Authorization") String token) {
 
     logger.debug(String.format("accessToken %s", token));
 
@@ -49,7 +47,7 @@ public class EventObjectController {
 
   @PostMapping(value = "/eventObjects")
   @ResponseBody
-  protected EventObject newEventObject(@RequestBody EventObjectPayload newEventObject,
+  EventObject newEventObject(@RequestBody EventObjectPayload newEventObject,
       @RequestHeader(name = "Authorization") String token) {
 
     logger.debug(String.format("accessToken %s", token));

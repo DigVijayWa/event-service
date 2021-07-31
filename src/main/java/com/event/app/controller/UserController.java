@@ -27,7 +27,7 @@ public class UserController {
 
   @PostMapping("/signin")
   @ResponseBody
-  public ResponseDTO login(
+  ResponseDTO login(
       @RequestBody UserPayload userPayload
   ) {
     return ResponseDTO.builder()
@@ -37,7 +37,7 @@ public class UserController {
 
   @PostMapping("/signup")
   @ResponseBody
-  public ResponseDTO signup(
+  ResponseDTO signup(
       @RequestBody UserPayload userPayload
   ) {
     return ResponseDTO.builder().accessToken(userService.signup(
@@ -47,7 +47,7 @@ public class UserController {
 
   @DeleteMapping("/delete")
   @ResponseBody
-  public String deleteUser(@RequestBody UserPayload userPayload) {
+  String deleteUser(@RequestBody UserPayload userPayload) {
     return userService.deleteUser(userPayload.getUsername(), userPayload.getPassword());
   }
 }

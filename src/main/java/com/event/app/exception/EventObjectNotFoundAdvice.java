@@ -17,7 +17,25 @@ class EventObjectNotFoundAdvice {
   ResponseEntity<ErrorPayload> employeeNotFoundHandler(
       EventObjectNotFoundException ex) {
     return new ResponseEntity(
-        ErrorPayload.builder().message(ex.getMessage()).httpStatus(ex.getHttpStatus().toString()),
-        HttpStatus.NOT_FOUND);
+        ErrorPayload.builder().httpStatus(ex.getHttpStatus().toString()).message(ex.getMessage())
+            .build(), HttpStatus.NOT_FOUND);
+  }
+
+  @ResponseBody
+  @ExceptionHandler(AuthenticationException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  ResponseEntity<ErrorPayload> unAuthorized(AuthenticationException ex) {
+    return new ResponseEntity(
+        ErrorPayload.builder().httpStatus(ex.getHttpStatus().toString()).message(ex.getMessage())
+            .build(), HttpStatus.UNAUTHORIZED);
+  }
+
+  @ResponseBody
+  @ExceptionHandler(UserNotFoundException.class)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
+  ResponseEntity<ErrorPayload> unAuthorizedUser(UserNotFoundException ex) {
+    return new ResponseEntity(
+        ErrorPayload.builder().httpStatus(ex.getHttpStatus().toString()).message(ex.getMessage())
+            .build(), HttpStatus.UNAUTHORIZED);
   }
 }
