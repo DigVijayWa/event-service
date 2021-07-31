@@ -79,7 +79,7 @@ dependencies {
 	testImplementation group: 'org.springframework', name: 'spring-test', version: '5.3.9'
 	testImplementation group: 'org.hamcrest', name: 'hamcrest-library', version: '2.2'
 	implementation group: 'com.jayway.jsonpath', name: 'json-path', version: '2.6.0'
-	testImplementation group: 'com.h2database', name: 'h2', version: '1.4.200'
+	runtimeOnly group: 'com.h2database', name: 'h2', version: '1.4.200'
 }
 
 test {
