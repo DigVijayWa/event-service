@@ -41,6 +41,8 @@ class UserControllerTest {
 
   private static final String VALID_PAYLOAD = "{\"username\":\"frodo\",\"password\":\"testpasswd\"}";
 
+  private static final String VALID_PAYLOAD2 = "{\"username\":\"frodo_wise\",\"password\":\"testpasswd\"}";
+
   private static final String INVALID_PAYLOAD = "{\"usernames\":\"frodo\",\"password\":\"testpasswd\"}";
 
   private MockMvc mockMvc;
@@ -63,6 +65,7 @@ class UserControllerTest {
           .contentType("application/json")
           .content(VALID_PAYLOAD.getBytes()))
         .andDo(print()).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.accessToken").isString())
         .andReturn();
 
     Assertions.assertEquals("application/json",mvcResult.getResponse().getContentType());
@@ -74,6 +77,30 @@ class UserControllerTest {
         .contentType("application/json")
         .content(INVALID_PAYLOAD.getBytes()))
         .andDo(print()).andExpect(MockMvcResultMatchers.status().is4xxClientError())
+        .andReturn();
+  }
+
+  @Test
+  public void postSigninWithInvalidContentShouldFail()  throws Exception {
+    this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signin")
+        .contentType("application/json")
+        .content(INVALID_PAYLOAD.getBytes()))
+        .andDo(print()).andExpect(MockMvcResultMatchers.status().is4xxClientError())
+        .andReturn();
+  }
+
+  @Test
+  public void postSignupAndDeleteShouldBeOk()  throws Exception {
+    this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signup")
+        .contentType("application/json")
+        .content(VALID_PAYLOAD2.getBytes()))
+        .andDo(print()).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+        .andReturn();
+
+    this.mockMvc.perform(MockMvcRequestBuilders.delete("/users/delete")
+        .contentType("application/json")
+        .content(VALID_PAYLOAD2.getBytes()))
+        .andDo(print()).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
         .andReturn();
   }
 }

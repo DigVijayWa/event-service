@@ -3,12 +3,14 @@ package com.event.app.controller;
 import com.event.app.bean.EventObject;
 import com.event.app.bean.User;
 import com.event.app.exception.EventObjectNotFoundException;
+import com.event.app.exception.InvalidPayloadException;
 import com.event.app.exception.UserNotFoundException;
 import com.event.app.inbound.EventObjectPayload;
 import com.event.app.repository.EventObjectRepository;
 import com.event.app.service.EventObjectService;
 import com.event.app.service.UserService;
 import java.util.List;
+import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,14 +49,17 @@ public class EventObjectController {
 
   @PostMapping(value = "/eventObjects")
   @ResponseBody
-  EventObject newEventObject(@RequestBody EventObjectPayload newEventObject,
+  EventObject newEventObject(@RequestBody EventObjectPayload maybeEventObjectPaylod,
       @RequestHeader(name = "Authorization") String token) {
 
     logger.debug(String.format("accessToken %s", token));
 
-    return userService.getUserByToken(token)
-        .map(user -> repository.save(EventObjectService.mapEventObject(newEventObject, user)))
-        .orElseThrow(() -> new UserNotFoundException(token));
+    return maybeEventObjectPaylod.getValidPayload()
+        .map(newEventObject -> userService.getUserByToken(token)
+            .map(user -> repository.save(EventObjectService.mapEventObject(newEventObject, user)))
+            .orElseThrow(() -> new UserNotFoundException(token)))
+        .orElseThrow(() -> new InvalidPayloadException(UUID.randomUUID().toString(),
+            "Missing fields in Event Object payload"));
   }
 
   @RequestMapping(value = "/eventObjects/{id}")
@@ -67,17 +72,20 @@ public class EventObjectController {
 
   @PutMapping(value = "/eventObjects/{id}")
   @ResponseBody
-  EventObject replaceEventObject(@RequestBody EventObjectPayload newEventObject,
+  EventObject replaceEventObject(@RequestBody EventObjectPayload maybeEventObjectPaylod,
       @PathVariable Long id, @RequestHeader(name = "Authorization") String token) {
 
     logger.debug(String.format("accessToken %s", token));
 
     User user = userService.getUserByToken(token)
         .orElseThrow(() -> new UserNotFoundException(token));
-    return repository.findById(id)
+
+    return maybeEventObjectPaylod.getValidPayload().map(newEventObject -> repository.findById(id)
         .map(eventObject -> repository
             .save(EventObjectService.mapEventObjectExisting(newEventObject, eventObject, user)))
-        .orElseGet(() -> repository.save(EventObjectService.mapEventObject(newEventObject, user)));
+        .orElseGet(() -> repository.save(EventObjectService.mapEventObject(newEventObject, user))))
+        .orElseThrow(() -> new InvalidPayloadException(UUID.randomUUID().toString(),
+            "Missing fields in Event Object payload"));
   }
 
   @DeleteMapping(value = "/eventObjects/{id}")

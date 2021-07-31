@@ -2,6 +2,7 @@ package com.event.app.inbound;
 
 import com.event.app.bean.User;
 import java.util.Date;
+import java.util.Optional;
 
 public class EventObjectPayload {
   private String eventName;
@@ -72,6 +73,22 @@ public class EventObjectPayload {
 
   public void setScope(String scope) {
     this.scope = scope;
+  }
+
+  public Optional<EventObjectPayload> getValidPayload() {
+    return this.eventName == null ||
+        this.eventName.compareTo("") == 0 ||
+        this.eventDescription == null ||
+        this.eventDescription.compareTo("") == 0 ||
+
+        this.eventDate == null ||
+        this.design == null ||
+        this.design.compareTo("") == 0 ||
+
+        this.sharableLink == null ||
+        this.sharableLink.compareTo("") == 0 ||
+        this.scope == null ||
+        this.scope.compareTo("") == 0 ? Optional.empty() : Optional.of(this);
   }
 
   public static class EventObjectPayloadBuilder {
