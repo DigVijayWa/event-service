@@ -1,5 +1,6 @@
 package com.event.app.security;
 
+import com.event.app.exception.UserNotFoundException;
 import com.event.app.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
@@ -16,11 +17,11 @@ public class UserDetailService implements UserDetailsService {
   private UserRepository userRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+  public UserDetails loadUserByUsername(String username)  {
     final com.event.app.bean.User user = userRepository.findByUsername(username);
 
     if (user == null) {
-      throw new UsernameNotFoundException("User '" + username + "' not found");
+      throw new UserNotFoundException(username);
     }
 
     return org.springframework.security.core.userdetails.User//

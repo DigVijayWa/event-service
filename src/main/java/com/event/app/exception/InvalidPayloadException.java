@@ -11,7 +11,7 @@ public class InvalidPayloadException extends RuntimeException{
   public InvalidPayloadException(String uuid, String message) {
     String formatMessage = message + "%s";
     this.message = String.format(formatMessage, uuid);
-    this.httpStatus = HttpStatus.PARTIAL_CONTENT;
+    this.httpStatus = HttpStatus.BAD_REQUEST;
   }
 
   @Override

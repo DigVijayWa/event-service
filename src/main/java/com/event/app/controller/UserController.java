@@ -8,10 +8,6 @@ import com.event.app.payload.ResponseDTO;
 import com.event.app.service.UserService;
 import java.util.Arrays;
 import java.util.UUID;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +25,7 @@ public class UserController {
 
   @PostMapping("/signin")
   @ResponseBody
-  public ResponseDTO login(
+  ResponseDTO login(
       @RequestBody UserPayload maybeUserPayload
   ) {
 
@@ -42,7 +38,7 @@ public class UserController {
 
   @PostMapping("/signup")
   @ResponseBody
-  public ResponseDTO signup(
+  ResponseDTO signup(
       @RequestBody UserPayload maybeUserPayload
   ) {
     return maybeUserPayload.getValidPayload()
@@ -55,7 +51,7 @@ public class UserController {
 
   @DeleteMapping("/delete")
   @ResponseBody
-  public String deleteUser(@RequestBody UserPayload maybeUserPayload) {
+  String deleteUser(@RequestBody UserPayload maybeUserPayload) {
 
     return maybeUserPayload.getValidPayload().map(
         userPayload -> userService.deleteUser(userPayload.getUsername(), userPayload.getPassword()))
