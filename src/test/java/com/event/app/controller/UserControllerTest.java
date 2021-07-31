@@ -1,6 +1,5 @@
 package com.event.app.controller;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 import com.event.app.config.DataSourceConfig;
@@ -25,12 +24,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import org.junit.jupiter.api.BeforeEach;
-
 @ExtendWith(SpringExtension.class)
 @EnableConfigurationProperties
 @TestPropertySource(locations = "classpath:application-cloud.properties")
-@ContextConfiguration(classes = { DataSourceConfig.class })
+@ContextConfiguration(classes = {DataSourceConfig.class})
 @WebAppConfiguration
 class UserControllerTest {
 
@@ -46,13 +43,14 @@ class UserControllerTest {
   private static final String INVALID_PAYLOAD = "{\"usernames\":\"frodo\",\"password\":\"testpasswd\"}";
 
   private MockMvc mockMvc;
+
   @BeforeEach
   public void setup() throws Exception {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
   }
 
   @Test
-  public void validateServerContext() {
+  void validateServerContext() {
     ServletContext servletContext = webApplicationContext.getServletContext();
 
     Assertions.assertNotNull(servletContext);
@@ -60,19 +58,19 @@ class UserControllerTest {
   }
 
   @Test
-  public void postSignupWithValidContentShouldSuccess()  throws Exception {
+  void postSignupWithValidContentShouldSuccess() throws Exception {
     final MvcResult mvcResult = this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signup")
-          .contentType("application/json")
-          .content(VALID_PAYLOAD.getBytes()))
+        .contentType("application/json")
+        .content(VALID_PAYLOAD.getBytes()))
         .andDo(print()).andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
         .andExpect(MockMvcResultMatchers.jsonPath("$.accessToken").isString())
         .andReturn();
 
-    Assertions.assertEquals("application/json",mvcResult.getResponse().getContentType());
+    Assertions.assertEquals("application/json", mvcResult.getResponse().getContentType());
   }
 
   @Test
-  public void postSignupWithInvalidContentShouldFail()  throws Exception {
+  void postSignupWithInvalidContentShouldFail() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signup")
         .contentType("application/json")
         .content(INVALID_PAYLOAD.getBytes()))
@@ -81,7 +79,7 @@ class UserControllerTest {
   }
 
   @Test
-  public void postSigninWithInvalidContentShouldFail()  throws Exception {
+  void postSigninWithInvalidContentShouldFail() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signin")
         .contentType("application/json")
         .content(INVALID_PAYLOAD.getBytes()))
@@ -90,7 +88,7 @@ class UserControllerTest {
   }
 
   @Test
-  public void postSignupAndDeleteShouldBeOk()  throws Exception {
+  void postSignupAndDeleteShouldBeOk() throws Exception {
     this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signup")
         .contentType("application/json")
         .content(VALID_PAYLOAD2.getBytes()))

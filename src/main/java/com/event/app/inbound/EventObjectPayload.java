@@ -1,6 +1,5 @@
 package com.event.app.inbound;
 
-import com.event.app.bean.User;
 import java.util.Date;
 import java.util.Optional;
 

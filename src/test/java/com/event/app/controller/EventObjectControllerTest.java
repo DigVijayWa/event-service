@@ -1,16 +1,15 @@
 package com.event.app.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+
 import com.event.app.config.DataSourceConfig;
 import com.google.gson.Gson;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
+import javax.servlet.ServletContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -28,16 +27,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.ServletContext;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 @ExtendWith(SpringExtension.class)
 @EnableConfigurationProperties
 @TestPropertySource(locations = "classpath:application-cloud.properties")
 @ContextConfiguration(classes = {DataSourceConfig.class})
 @WebAppConfiguration
-class EventObjectControllerIntegrationTest {
+class EventObjectControllerTest {
 
   @Autowired
   private WebApplicationContext webApplicationContext;
@@ -129,7 +124,7 @@ class EventObjectControllerIntegrationTest {
         .andReturn();
   }
 
-  public MvcResult getUserSigninResult() throws Exception {
+  MvcResult getUserSigninResult() throws Exception {
     MvcResult tempResult =
         isSignupDone ? this.mockMvc.perform(MockMvcRequestBuilders.post("/users/signin")
             .contentType("application/json")
