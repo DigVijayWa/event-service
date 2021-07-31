@@ -2,10 +2,12 @@ package com.event.app.controller;
 
 import com.event.app.bean.Role;
 import com.event.app.bean.User;
+import com.event.app.exception.InvalidPayloadException;
 import com.event.app.inbound.UserPayload;
 import com.event.app.payload.ResponseDTO;
 import com.event.app.service.UserService;
 import java.util.Arrays;
+import java.util.UUID;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,26 +30,36 @@ public class UserController {
   @PostMapping("/signin")
   @ResponseBody
   public ResponseDTO login(
-      @RequestBody UserPayload userPayload
+      @RequestBody UserPayload maybeUserPayload
   ) {
-    return ResponseDTO.builder()
+
+    return maybeUserPayload.getValidPayload().map(userPayload -> ResponseDTO.builder()
         .accessToken(userService.signin(userPayload.getUsername(), userPayload.getPassword()))
-        .build();
+        .build())
+        .orElseThrow(() -> new InvalidPayloadException(UUID.randomUUID().toString(),
+            "Userpayload has some missing fields "));
   }
 
   @PostMapping("/signup")
   @ResponseBody
   public ResponseDTO signup(
-      @RequestBody UserPayload userPayload
+      @RequestBody UserPayload maybeUserPayload
   ) {
-    return ResponseDTO.builder().accessToken(userService.signup(
-        User.builder().roles(Arrays.asList(Role.ROLE_ADMIN)).password(userPayload.getPassword())
-            .username(userPayload.getUsername()).build())).build();
+    return maybeUserPayload.getValidPayload()
+        .map(userPayload -> ResponseDTO.builder().accessToken(userService.signup(
+            User.builder().roles(Arrays.asList(Role.ROLE_ADMIN)).password(userPayload.getPassword())
+                .username(userPayload.getUsername()).build())).build())
+        .orElseThrow(() -> new InvalidPayloadException(UUID.randomUUID().toString(),
+            "Userpayload has some missing fields "));
   }
 
   @DeleteMapping("/delete")
   @ResponseBody
-  public String deleteUser(@RequestBody UserPayload userPayload) {
-    return userService.deleteUser(userPayload.getUsername(), userPayload.getPassword());
+  public String deleteUser(@RequestBody UserPayload maybeUserPayload) {
+
+    return maybeUserPayload.getValidPayload().map(
+        userPayload -> userService.deleteUser(userPayload.getUsername(), userPayload.getPassword()))
+        .orElseThrow(() -> new InvalidPayloadException(UUID.randomUUID().toString(),
+            "Userpayload has some missing fields "));
   }
 }

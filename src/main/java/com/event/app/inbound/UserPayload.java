@@ -1,5 +1,7 @@
 package com.event.app.inbound;
 
+import java.util.Optional;
+
 public class UserPayload {
   private String username;
   private String password;
@@ -27,6 +29,13 @@ public class UserPayload {
 
   public void setPassword(String password) {
     this.password = password;
+  }
+
+  public Optional<UserPayload> getValidPayload() {
+    return this.password == null ||
+        this.password.compareTo("") == 0  ||
+        this.username == null ||
+        this.username.compareTo("") == 0 ? Optional.empty() : Optional.of(this);
   }
 
   public static class UserPayloadBuilder {
