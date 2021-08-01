@@ -16,22 +16,16 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @PropertySource("classpath:application.properties")
 public class DataSourceConfig implements WebMvcConfigurer {
 
+  private final long MAX_AGE_SECS = 3600;
+  Logger logger = LogManager.getLogger(DataSourceConfig.class);
   @Value("${spring.datasource.url}")
   private String url;
-
   @Value("${spring.datasource.driverClassName}")
   private String driverClassName;
-
   @Value("${spring.datasource.username}")
   private String username;
-
   @Value("${spring.datasource.password}")
   private String password;
-
-
-  private final long MAX_AGE_SECS = 3600;
-
-  Logger logger = LogManager.getLogger(DataSourceConfig.class);
 
   @Bean
   DataSource dataSource() {

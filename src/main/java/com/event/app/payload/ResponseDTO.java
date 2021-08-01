@@ -1,6 +1,7 @@
 package com.event.app.payload;
 
 public class ResponseDTO {
+
   private String accessToken;
 
   ResponseDTO(String accessToken) {

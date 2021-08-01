@@ -18,19 +18,15 @@ import javax.persistence.Table;
 @Table(name = "user_sys")
 public class User {
 
+  @ElementCollection(fetch = FetchType.EAGER)
+  List<Role> roles;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "user_id", unique = true, nullable = false)
   private Integer id;
-
   @Column(unique = true, nullable = false)
   private String username;
-
   private String password;
-
-  @ElementCollection(fetch = FetchType.EAGER)
-  List<Role> roles;
-
   @OneToMany(mappedBy = "user")
   @JsonManagedReference
   private Set<EventObject> eventObjects;
@@ -63,36 +59,36 @@ public class User {
     return this.id;
   }
 
-  public String getUsername() {
-    return this.username;
-  }
-
-  public String getPassword() {
-    return this.password;
-  }
-
-  public List<com.event.app.bean.Role> getRoles() {
-    return this.roles;
-  }
-
-  public Set<EventObject> getEventObjects() {
-    return this.eventObjects;
-  }
-
   public void setId(Integer id) {
     this.id = id;
+  }
+
+  public String getUsername() {
+    return this.username;
   }
 
   public void setUsername(String username) {
     this.username = username;
   }
 
+  public String getPassword() {
+    return this.password;
+  }
+
   public void setPassword(String password) {
     this.password = password;
   }
 
+  public List<com.event.app.bean.Role> getRoles() {
+    return this.roles;
+  }
+
   public void setRoles(List<com.event.app.bean.Role> roles) {
     this.roles = roles;
+  }
+
+  public Set<EventObject> getEventObjects() {
+    return this.eventObjects;
   }
 
   public void setEventObjects(Set<EventObject> eventObjects) {

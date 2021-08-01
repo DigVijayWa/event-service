@@ -34,26 +34,17 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 class EventObjectControllerTest {
 
-  @Autowired
-  private WebApplicationContext webApplicationContext;
-
+  private static final String VALID_PAYLOAD_EVENT_OBJECT = "{\"eventName\":\"some2\",\"eventDescription\":\"details\",\"eventDate\":\"2012-04-23T18:25:43.511Z\",\"design\":\"something\",\"sharableLink\":\"sharableLink\",\"scope\":\"PUBLIC\",\"user_id\":\"1\"}";
+  private static final String INVALID_PAYLOAD_EVENT_OBJECT = "{\"eventsName\":\"some2\",\"eventDescription\":\"details\",\"eventDate\":\"2012-04-23T18:25:43.511Z\",\"design\":\"something\",\"sharableLink\":\"sharableLink\",\"scope\":\"PUBLIC\",\"user_id\":\"1\"}";
   private static String username = UUID.randomUUID().toString();
-
   private static final String VALID_PAYLOAD =
       "{\"username\":\"" + username + "\",\"password\":\"testpasswd\"}";
-
-  private static final String VALID_PAYLOAD_EVENT_OBJECT = "{\"eventName\":\"some2\",\"eventDescription\":\"details\",\"eventDate\":\"2012-04-23T18:25:43.511Z\",\"design\":\"something\",\"sharableLink\":\"sharableLink\",\"scope\":\"PUBLIC\",\"user_id\":\"1\"}";
-
-  private static final String INVALID_PAYLOAD_EVENT_OBJECT = "{\"eventsName\":\"some2\",\"eventDescription\":\"details\",\"eventDate\":\"2012-04-23T18:25:43.511Z\",\"design\":\"something\",\"sharableLink\":\"sharableLink\",\"scope\":\"PUBLIC\",\"user_id\":\"1\"}";
-
-
-  Logger logger = LogManager.getLogger();
-
-  private MockMvc mockMvc;
-
-  private MvcResult userSignupResult = null;
-
   private static boolean isSignupDone = false;
+  Logger logger = LogManager.getLogger();
+  @Autowired
+  private WebApplicationContext webApplicationContext;
+  private MockMvc mockMvc;
+  private MvcResult userSignupResult = null;
 
   @BeforeEach
   public void setup() throws Exception {

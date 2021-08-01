@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Optional;
 
 public class EventObjectPayload {
+
   private String eventName;
   private String eventDescription;
   private Date eventDate;
@@ -11,7 +12,7 @@ public class EventObjectPayload {
   private String sharableLink;
   private String scope;
 
-  EventObjectPayload( String eventName, String eventDescription, Date eventDate,
+  EventObjectPayload(String eventName, String eventDescription, Date eventDate,
       String design, String sharableLink, String scope) {
     this.eventName = eventName;
     this.eventDescription = eventDescription;
@@ -30,44 +31,44 @@ public class EventObjectPayload {
     return this.eventName;
   }
 
-  public String getEventDescription() {
-    return this.eventDescription;
-  }
-
-  public Date getEventDate() {
-    return this.eventDate;
-  }
-
-  public String getDesign() {
-    return this.design;
-  }
-
-  public String getSharableLink() {
-    return this.sharableLink;
-  }
-
-  public String getScope() {
-    return this.scope;
-  }
-
   public void setEventName(String eventName) {
     this.eventName = eventName;
+  }
+
+  public String getEventDescription() {
+    return this.eventDescription;
   }
 
   public void setEventDescription(String eventDescription) {
     this.eventDescription = eventDescription;
   }
 
+  public Date getEventDate() {
+    return this.eventDate;
+  }
+
   public void setEventDate(Date eventDate) {
     this.eventDate = eventDate;
+  }
+
+  public String getDesign() {
+    return this.design;
   }
 
   public void setDesign(String design) {
     this.design = design;
   }
 
+  public String getSharableLink() {
+    return this.sharableLink;
+  }
+
   public void setSharableLink(String sharableLink) {
     this.sharableLink = sharableLink;
+  }
+
+  public String getScope() {
+    return this.scope;
   }
 
   public void setScope(String scope) {

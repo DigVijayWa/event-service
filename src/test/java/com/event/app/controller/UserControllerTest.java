@@ -31,17 +31,12 @@ import org.springframework.web.context.WebApplicationContext;
 @WebAppConfiguration
 class UserControllerTest {
 
+  private static final String VALID_PAYLOAD = "{\"username\":\"frodo\",\"password\":\"testpasswd\"}";
+  private static final String VALID_PAYLOAD2 = "{\"username\":\"frodo_wise\",\"password\":\"testpasswd\"}";
+  private static final String INVALID_PAYLOAD = "{\"usernames\":\"frodo\",\"password\":\"testpasswd\"}";
+  Logger logger = LogManager.getLogger();
   @Autowired
   private WebApplicationContext webApplicationContext;
-
-  Logger logger = LogManager.getLogger();
-
-  private static final String VALID_PAYLOAD = "{\"username\":\"frodo\",\"password\":\"testpasswd\"}";
-
-  private static final String VALID_PAYLOAD2 = "{\"username\":\"frodo_wise\",\"password\":\"testpasswd\"}";
-
-  private static final String INVALID_PAYLOAD = "{\"usernames\":\"frodo\",\"password\":\"testpasswd\"}";
-
   private MockMvc mockMvc;
 
   @BeforeEach

@@ -31,7 +31,7 @@ public class AuthenticationException extends RuntimeException {
   public String toString() {
     return "{" +
         "\"message\":\"" + message + "\"," +
-        "\"httpStatus\":\"" + httpStatus +"\""+
+        "\"httpStatus\":\"" + httpStatus + "\"" +
         '}';
   }
 

@@ -3,6 +3,7 @@ package com.event.app.inbound;
 import java.util.Optional;
 
 public class UserPayload {
+
   private String username;
   private String password;
 
@@ -19,12 +20,12 @@ public class UserPayload {
     return this.username;
   }
 
-  public String getPassword() {
-    return this.password;
-  }
-
   public void setUsername(String username) {
     this.username = username;
+  }
+
+  public String getPassword() {
+    return this.password;
   }
 
   public void setPassword(String password) {
@@ -33,7 +34,7 @@ public class UserPayload {
 
   public Optional<UserPayload> getValidPayload() {
     return this.password == null ||
-        this.password.compareTo("") == 0  ||
+        this.password.compareTo("") == 0 ||
         this.username == null ||
         this.username.compareTo("") == 0 ? Optional.empty() : Optional.of(this);
   }

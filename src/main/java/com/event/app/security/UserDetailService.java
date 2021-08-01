@@ -15,7 +15,7 @@ public class UserDetailService implements UserDetailsService {
   private UserRepository userRepository;
 
   @Override
-  public UserDetails loadUserByUsername(String username)  {
+  public UserDetails loadUserByUsername(String username) {
     final com.event.app.bean.User user = userRepository.findByUsername(username);
 
     if (user == null) {

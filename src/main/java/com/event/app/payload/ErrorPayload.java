@@ -1,12 +1,17 @@
 package com.event.app.payload;
 
 public class ErrorPayload {
+
   String message;
   String httpStatus;
 
   public ErrorPayload(String message, String httpStatus) {
     this.message = message;
     this.httpStatus = httpStatus;
+  }
+
+  public static ErrorPayloadBuilder builder() {
+    return new ErrorPayloadBuilder();
   }
 
   public String getMessage() {
@@ -23,10 +28,6 @@ public class ErrorPayload {
 
   public void setHttpStatus(String httpStatus) {
     this.httpStatus = httpStatus;
-  }
-
-  public static ErrorPayloadBuilder builder() {
-    return new ErrorPayloadBuilder();
   }
 
   public static class ErrorPayloadBuilder {

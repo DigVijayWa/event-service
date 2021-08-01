@@ -30,7 +30,8 @@ public class EventObject {
   @JsonBackReference
   private User user;
 
-  public EventObject() {}
+  public EventObject() {
+  }
 
   public EventObject(Long id, String eventName, String eventDescription, Date eventDate,
       String design, String sharableLink) {
@@ -107,60 +108,60 @@ public class EventObject {
     return this.id;
   }
 
-  public String getEventName() {
-    return this.eventName;
-  }
-
-  public String getEventDescription() {
-    return this.eventDescription;
-  }
-
-  public Date getEventDate() {
-    return this.eventDate;
-  }
-
-  public String getDesign() {
-    return this.design;
-  }
-
-  public String getSharableLink() {
-    return this.sharableLink;
-  }
-
-  public String getScope() {
-    return this.scope;
-  }
-
-  public com.event.app.bean.User getUser() {
-    return this.user;
-  }
-
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public String getEventName() {
+    return this.eventName;
   }
 
   public void setEventName(String eventName) {
     this.eventName = eventName;
   }
 
+  public String getEventDescription() {
+    return this.eventDescription;
+  }
+
   public void setEventDescription(String eventDescription) {
     this.eventDescription = eventDescription;
+  }
+
+  public Date getEventDate() {
+    return this.eventDate;
   }
 
   public void setEventDate(Date eventDate) {
     this.eventDate = eventDate;
   }
 
+  public String getDesign() {
+    return this.design;
+  }
+
   public void setDesign(String design) {
     this.design = design;
+  }
+
+  public String getSharableLink() {
+    return this.sharableLink;
   }
 
   public void setSharableLink(String sharableLink) {
     this.sharableLink = sharableLink;
   }
 
+  public String getScope() {
+    return this.scope;
+  }
+
   public void setScope(String scope) {
     this.scope = scope;
+  }
+
+  public com.event.app.bean.User getUser() {
+    return this.user;
   }
 
   public void setUser(com.event.app.bean.User user) {

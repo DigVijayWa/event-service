@@ -10,7 +10,7 @@ public class EventObjectNotFoundException extends RuntimeException {
 
 
   public EventObjectNotFoundException(Long id) {
-    this.message = String.format("Could not find EventObject %s",id);
+    this.message = String.format("Could not find EventObject %s", id);
     this.httpStatus = HttpStatus.NOT_FOUND;
   }
 
@@ -27,7 +27,7 @@ public class EventObjectNotFoundException extends RuntimeException {
   public String toString() {
     return "{" +
         "\"message\":\"" + message + "\"," +
-        "\"httpStatus\":\"" + httpStatus +"\""+
+        "\"httpStatus\":\"" + httpStatus + "\"" +
         '}';
   }
 }

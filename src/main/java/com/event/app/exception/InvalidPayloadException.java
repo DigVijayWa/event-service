@@ -2,7 +2,8 @@ package com.event.app.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class InvalidPayloadException extends RuntimeException{
+public class InvalidPayloadException extends RuntimeException {
+
   private final String message;
 
   private final HttpStatus httpStatus;
@@ -27,7 +28,7 @@ public class InvalidPayloadException extends RuntimeException{
   public String toString() {
     return "{" +
         "\"message\":\"" + message + "\"," +
-        "\"httpStatus\":\"" + httpStatus +"\""+
+        "\"httpStatus\":\"" + httpStatus + "\"" +
         '}';
   }
 }
