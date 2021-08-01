@@ -29,7 +29,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @ExtendWith(SpringExtension.class)
 @EnableConfigurationProperties
-@TestPropertySource(locations = "classpath:application-cloud.properties")
+@TestPropertySource(locations = "classpath:application-test.properties")
 @ContextConfiguration(classes = {DataSourceConfig.class})
 @WebAppConfiguration
 class EventObjectControllerTest {
